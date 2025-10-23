@@ -7,6 +7,7 @@
 #if ENABLE_GAME_FRAME_X_APPSFLYER
 using AppsFlyerSDK;
 #endif
+using System.Collections.Generic;
 using GameFrameX.Runtime;
 using UnityEngine;
 
@@ -44,6 +45,18 @@ namespace GameFrameX.AppsFlyer.Runtime
             AppsFlyerSDK.AppsFlyer.handlePushNotifications();
             AppsFlyerSDK.AppsFlyer.setCustomerUserId(SystemInfo.deviceUniqueIdentifier);
             AppsFlyerSDK.AppsFlyer.startSDK();
+#endif
+        }
+
+        /// <summary>
+        /// 发送自定义事件到 AppsFlyer
+        /// </summary>
+        /// <param name="eventName">事件名称，用于标识特定的用户行为或应用内事件</param>
+        /// <param name="eventValues">事件参数字典，包含与事件相关的键值对数据</param>
+        public void Event(string eventName, Dictionary<string, string> eventValues)
+        {
+#if ENABLE_GAME_FRAME_X_APPSFLYER
+            AppsFlyerSDK.AppsFlyer.sendEvent(eventName, eventValues);
 #endif
         }
 

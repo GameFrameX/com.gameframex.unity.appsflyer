@@ -4,6 +4,7 @@
 // 
 // 不得利用本项目从事危害国家安全、扰乱社会秩序、侵犯他人合法权益等法律法规禁止的活动！任何基于本项目二次开发而产生的一切法律纠纷和责任，我们不承担任何责任！
 
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace GameFrameX.AppsFlyer.Runtime
@@ -23,5 +24,13 @@ namespace GameFrameX.AppsFlyer.Runtime
         /// <param name="monoBehaviour">MonoBehaviour实例，用于处理回调事件</param>
         [UnityEngine.Scripting.Preserve]
         void Init(bool debug, string appId, string appDevKey, MonoBehaviour monoBehaviour);
+
+        /// <summary>
+        /// 发送自定义事件到 AppsFlyer
+        /// </summary>
+        /// <param name="eventName">事件名称，用于标识特定的用户行为或应用内事件</param>
+        /// <param name="eventValues">事件参数字典，包含与事件相关的键值对数据</param>
+        [UnityEngine.Scripting.Preserve]
+        void Event(string eventName, Dictionary<string, string> eventValues);
     }
 }

@@ -4,6 +4,8 @@
 // 
 // 不得利用本项目从事危害国家安全、扰乱社会秩序、侵犯他人合法权益等法律法规禁止的活动！任何基于本项目二次开发而产生的一切法律纠纷和责任，我们不承担任何责任！
 
+using System;
+using System.Collections.Generic;
 using AppsFlyerSDK;
 using GameFrameX.Runtime;
 using UnityEngine;
@@ -66,6 +68,16 @@ namespace GameFrameX.AppsFlyer.Runtime
 #elif UNITY_IOS
             _appsFlyerManager.Init(m_debug, m_iOSAppId, m_iOSDevKey, this);
 #endif
+        }
+
+        /// <summary>
+        /// 发送自定义事件到 AppsFlyer
+        /// </summary>
+        /// <param name="eventName">事件名称，用于标识特定的用户行为或应用内事件</param>
+        /// <param name="eventValues">事件参数字典，包含与事件相关的键值对数据</param>
+        public void Event(string eventName, Dictionary<string, string> eventValues)
+        {
+            _appsFlyerManager.Event(eventName, eventValues);
         }
     }
 }
