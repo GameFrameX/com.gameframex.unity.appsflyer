@@ -61,21 +61,10 @@ namespace GameFrameX.AppsFlyer.Runtime
         [UnityEngine.Scripting.Preserve]
         public void Start()
         {
-#if ENABLE_GAME_FRAME_X_APPSFLYER
-            if (m_debug)
-            {
-                AppsFlyerSDK.AppsFlyer.setIsDebug(true);
-            }
 #if UNITY_ANDROID
-            AppsFlyerSDK.AppsFlyer.initSDK(m_AndroidDevKey, m_AndroidAppId, this);
+            _appsFlyerManager.Init(m_debug, m_AndroidAppId, m_AndroidDevKey, this);
 #elif UNITY_IOS
-            AppsFlyerSDK.AppsFlyer.initSDK(m_iOSDevKey, m_iOSAppId, this);
-#endif
-            AppsFlyerConsent consent = new AppsFlyerConsent(true, true);
-            AppsFlyerSDK.AppsFlyer.setConsentData(consent);
-
-            AppsFlyerSDK.AppsFlyer.setCustomerUserId(SystemInfo.deviceUniqueIdentifier);
-            AppsFlyerSDK.AppsFlyer.startSDK();
+            _appsFlyerManager.Init(m_debug, m_iOSAppId, m_iOSDevKey, this);
 #endif
         }
     }
