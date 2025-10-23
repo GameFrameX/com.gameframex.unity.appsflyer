@@ -1,0 +1,23 @@
+{
+    "name": "GameFrameX.AppsFlyer.Runtime",
+    "rootNamespace": "GameFrameX.AppsFlyer.Runtime",
+    "references": [
+        "GameFrameX.Runtime",
+        "AppsFlyer"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [
+        {
+            "name": "com.appsflyer.unity",
+            "expression": "",
+            "define": "ENABLE_GAME_FRAME_X_APPSFLYER"
+        }
+    ],
+    "noEngineReferences": false
+}
