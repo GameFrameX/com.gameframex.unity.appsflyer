@@ -29,6 +29,7 @@
 //  Official Documentation: https://gameframex.doc.alianblank.com/
 // ==========================================================================================
 
+#if UNITY_IOS || UNITY_IPHONE
 using System.IO;
 using UnityEditor;
 using UnityEditor.Callbacks;
@@ -64,3 +65,4 @@ namespace GameFrameX.AppsFlyer.Editor
         }
     }
 }
+#endif
