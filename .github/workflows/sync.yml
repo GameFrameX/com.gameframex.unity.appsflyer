@@ -1,8 +1,15 @@
-name: Sync Github To Image
+name: Sync Github To Image (External)
 
 on:
   push:
-    branches: [main]
+    branches:
+      - '**'
+    tags-ignore:
+      - '**'
+  workflow_run:
+    workflows: ["Publish Release"]  # 监听的工作流名称
+    types:
+      - completed  # 监听完成事件
   #schedule:
     # 定时任务，每天 UTC 时间 0 点运行
     #- cron: "0 0 * * *"
@@ -10,47 +17,12 @@ on:
 
 jobs:
   sync-gitee:
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0 # 为了 git pull --unshallow，我们需要获取所有的提交历史
-
-      - name: Set up Git user
-        run: |
-          git config --global user.email "wangfj11@foxmail.com"
-          git config --global user.name "AlianBlank"
-
-      - name: Set SSH
-        run: |
-          mkdir -p ~/.ssh
-          echo "${{ secrets.GITEE_ID_RSA }}" >> ~/.ssh/id_rsa
-          chmod 600 ~/.ssh/id_rsa
-          eval $(ssh-agent -s) && ssh-add ~/.ssh/id_rsa
-          # 信任域名
-          ssh-keyscan -H gitee.com >> ~/.ssh/known_hosts
-      # 查看当前分支
-      - name: Check current branch
-        run: echo 当前分支：${{ github.ref_name }} ${{ github.Repository }}
-      # 查看远端 地址
-      - name: echo git url
-        run: echo git@gitee.com:${{ github.Repository }}.git
-
-      # 添加远端
-      - name: add remote url
-        run: git remote add mirror "git@gitee.com:${{ github.Repository }}.git"
-
-      # 获取
-      - name: fetch
-        run: git fetch --prune mirror --tags --verbose
-
-      # 拉取和推送
-      - name: pull and push
-        run: | 
-          if [ "${{ github.ref_name }}" ]; then
-          git checkout ${{ github.ref_name }}
-          git push -f mirror ${{ github.ref_name }}
-          git push -f mirror --tags --verbose
-          fi
+    # 引用外部仓库的可重用工作流
+    # 格式: {owner}/{repo}/.github/workflows/{filename}@{ref}
+    uses: GameFrameX/public-github-actions/.github/workflows/sync.yml@main
+    with:
+      # 传递参数给外部工作流
+      target_branch: ${{ github.ref_name }}
+      repository_name: ${{ github.repository }}
+    # 组织级别已配置密钥，可以使用 inherit 继承所有密钥
+    secrets: inherit
