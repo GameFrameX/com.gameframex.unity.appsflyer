@@ -16,7 +16,7 @@ namespace GameFrameX.AppsFlyer.Runtime
     /// AppsFlyer组件。
     /// </summary>
     [DisallowMultipleComponent]
-    [AddComponentMenu("Game Framework/AppsFlyer")]
+    [AddComponentMenu("GameFrameX/AppsFlyer")]
     [UnityEngine.Scripting.Preserve]
     public class AppsFlyerComponent : GameFrameworkComponent
     {
